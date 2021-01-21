@@ -21,35 +21,18 @@ bot.remove_command('help')                  # Removes the default help command
 # Notify in console when bot is loaded
 @bot.event
 async def on_ready():
-    lout.log('bot.yml', botStartTime, None, None, True)
+    lout.log(botStartTime, None, lout.readConfig('bot.yml', 'botName'), True)
 
 # The whole purpose of this file...
-@bot.command(pass_context=True)
-async def servs(ctx):
+@bot.event
+async def on_message(message):
     startTime = DT.datetime.now()
-    guildsList = str(bot.guilds)
-    guildsList = guildsList.replace('[', '')
-    guildsList = guildsList.replace(']', '')
-    guildsList = guildsList.split(",")
-    names = []
-    members = 0
-    for i in guildsList:
-        i = i.split(' ')
-        name = i[3]
-        name = name.replace('\'', '')
-        name = name.replace('name=', '')
-        names.append(name)
-
-        member = i[6]
-        member = member.replace('member_count=', '')
-        members = members + str(member)
-
-    for i in names:
-        print(i)
+    print(message)
+    channel = message.channel
+    logChannel = 
     
-    print('Member Count:', members)
+    lout.log(startTime, 'message content printed', 'TestBot')
 
 
-    lout.log('bot.yml', startTime, 'servs; number of servers: {}'.format(len(bot.guilds)))
 
 bot.run(lout.fetchToken('bot.yml'))
